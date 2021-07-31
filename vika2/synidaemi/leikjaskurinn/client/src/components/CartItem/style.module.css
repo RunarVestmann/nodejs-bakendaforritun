@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    background-color: var(--light-green);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    user-select: none;
+}
+
+.item {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    cursor: pointer;
+}
+
+.item:hover {
+    opacity: 0.7;
+}
+
+.item img {
+    width: 10rem;
+    height: 10rem;
+    object-fit: scale-down;
+    margin-right: 1rem;
+}
+
+.name {
+    font-size: 1.5rem;
+}
+
+.price {
+    font-size: 1.2rem;
+}
+
+.buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    align-self: flex-end;
+}
+
+@media only screen and (max-width: 800px) {
+    .item {
+        flex-flow: column nowrap;
+    }
+    .item p {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,15 @@
+.container {
+    margin-top: 1rem;
+}
+
+.heading {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+}
+
+.container p {
+    background-color: var(--light-green);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-size: 1.4rem;
+}

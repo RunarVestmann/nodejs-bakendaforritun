@@ -1,0 +1,11 @@
+.successContainer {
+    width: 60%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.successContainer p {
+    font-size: 2rem;
+}

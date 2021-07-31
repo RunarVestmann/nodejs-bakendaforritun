@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #05386b;
+    --dark-green: #379683;
+    --green: #5cdb95;
+    --light-green: #8ee4af;
+}
+
+body {
+    background-color: var(--green);
+    color: var(--blue);
+}

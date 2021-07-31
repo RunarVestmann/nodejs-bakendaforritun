@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.price {
+    text-align: end;
+    font-size: 1.2rem;
+}
+
+.noItems {
+    font-size: 2rem;
+    font-weight: bold;
+    user-select: none;
+}

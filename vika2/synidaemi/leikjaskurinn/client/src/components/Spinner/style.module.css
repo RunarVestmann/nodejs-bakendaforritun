@@ -1,0 +1,9 @@
+.container {
+    display: grid;
+    height: 60vh;
+    place-items: center;
+}
+
+.container img {
+    height: 7rem;
+}
