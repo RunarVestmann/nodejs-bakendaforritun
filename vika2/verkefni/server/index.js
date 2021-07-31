@@ -49,8 +49,6 @@ app.patch('/items/:id', async (req, res) => {
         res.json(item);
     } catch (error) {
         if (error instanceof CastError) return res.status(404).json({ message: `Item with id: ${id} was not found` });
-        // TODO: Perhaps send ourselves an e-mail with the error
-        // TODO: Log the error to a database
         res.status(500).json({ message: `Something went wrong` });
     }
 });
@@ -63,8 +61,6 @@ app.delete('/items/:id', async (req, res) => {
         res.json(item);
     } catch (error) {
         if (error instanceof CastError) return res.status(404).json({ message: `Item with id: ${id} was not found` });
-        // TODO: Perhaps send ourselves an e-mail with the error
-        // TODO: Log the error to a database
         res.status(500).json({ message: `Something went wrong` });
     }
 });
