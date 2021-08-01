@@ -182,6 +182,6 @@ app.delete('/authors/:id', async (req, res) => {
     }
 });
 
-app.use((req, res) => res.json({ message: `Resource for ${req.method} ${req.url} was not found` }));
+app.use((req, res) => res.status(404).json({ message: `Resource for ${req.method} ${req.url} was not found` }));
 
 app.listen(PORT, () => console.log(`Server has started and is listening on port ${PORT}`));
