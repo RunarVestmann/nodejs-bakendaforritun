@@ -1,7 +1,7 @@
 interface AuthorEntity {
     _id: string;
     name: string;
-    birthdate: Date;
+    birthdate: string;
     description: string;
     image: string;
 }

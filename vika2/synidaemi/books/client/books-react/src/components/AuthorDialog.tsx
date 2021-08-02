@@ -19,7 +19,7 @@ export const AuthorDialog: React.FC<Props> = ({
     open,
     onClose,
     authors,
-    initialState = { description: '', name: '', image: '', birthdate: new Date() },
+    initialState = { description: '', name: '', image: '', birthdate: '' },
 }) => {
     const [state, setState] = useState<Omit<AuthorEntity, '_id'> & { _id?: string }>(initialState);
     const isSubmitting = useRef(false);
@@ -63,12 +63,15 @@ export const AuthorDialog: React.FC<Props> = ({
                     fullWidth
                 />
                 <TextField
-                    value={state.birthdate}
+                    value={state.birthdate.split('T')[0]}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                     onChange={handleChange}
                     margin="dense"
                     name="birthdate"
                     label="Birthdate"
-                    type="text"
+                    type="date"
                     fullWidth
                 />
                 <TextField
