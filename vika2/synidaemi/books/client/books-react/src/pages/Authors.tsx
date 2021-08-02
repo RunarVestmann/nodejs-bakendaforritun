@@ -28,12 +28,18 @@ export const Authors = () => {
     const history = useHistory();
 
     useEffect(() => {
-        const getAllAuthors = async () => {
-            const response = await fetch(AUTHORS_URL);
-            const data = await response.json();
-            setAuthors(data);
+        const controller = new AbortController();
+        const getAllAuthors = async (controller: AbortController) => {
+            try {
+                const response = await fetch(AUTHORS_URL, { signal: controller.signal });
+                const data = await response.json();
+                setAuthors(data);
+            } catch (error) {
+                if (error.name !== 'AbortError') console.log(error);
+            }
         };
-        getAllAuthors();
+        getAllAuthors(controller);
+        return () => controller.abort();
     }, []);
 
     return (

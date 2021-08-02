@@ -38,12 +38,21 @@ export const Books: React.FC<Props> = ({ initialBooks }) => {
     }, [initialBooks]);
 
     useEffect(() => {
-        const getAllBooksAndAuthors = async () => {
-            const [bookResponse, authorResponse] = await Promise.all([fetch(BOOKS_URL), fetch(AUTHORS_URL)]);
-            if (!initialBooks) setBooks(await bookResponse.json());
-            setAuthors(await authorResponse.json());
+        const controller = new AbortController();
+        const getAllBooksAndAuthors = async (controller: AbortController) => {
+            try {
+                const [bookResponse, authorResponse] = await Promise.all([
+                    fetch(BOOKS_URL, { signal: controller.signal }),
+                    fetch(AUTHORS_URL, { signal: controller.signal }),
+                ]);
+                if (!initialBooks) setBooks(await bookResponse.json());
+                setAuthors(await authorResponse.json());
+            } catch (error) {
+                if (error.name !== 'AbortError') console.log(error);
+            }
         };
-        getAllBooksAndAuthors();
+        getAllBooksAndAuthors(controller);
+        return () => controller.abort();
     }, [initialBooks]);
 
     return (

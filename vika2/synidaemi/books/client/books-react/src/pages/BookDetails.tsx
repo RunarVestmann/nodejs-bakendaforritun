@@ -47,14 +47,19 @@ export const BookDetails = () => {
     const [book, setBook] = useState<BookDto | null>(null);
 
     useEffect(() => {
-        const getBook = async () => {
-            const response = await fetch(`${BOOKS_URL}/${id}`);
-            if (!response.ok) return history.push('/notfound');
-            const book = await response.json();
-            console.log(book);
-            setBook(book);
+        const controller = new AbortController();
+        const getBook = async (controller: AbortController) => {
+            try {
+                const response = await fetch(`${BOOKS_URL}/${id}`, { signal: controller.signal });
+                if (!response.ok) return history.push('/notfound');
+                const book = await response.json();
+                setBook(book);
+            } catch (error) {
+                if (error.name !== 'AbortError') console.log(error);
+            }
         };
-        getBook();
+        getBook(controller);
+        return () => controller.abort();
     }, [history, id]);
 
     return (

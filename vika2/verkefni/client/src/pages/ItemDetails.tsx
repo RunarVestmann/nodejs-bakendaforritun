@@ -34,14 +34,20 @@ export const ItemDetials = () => {
     const [item, setItem] = useState<Item | null>(null);
 
     useEffect(() => {
-        const getItem = async () => {
-            const response = await fetch(`${ITEMS_URL}/${id}`);
-            if (!response.ok) return history.push('/notfound');
-            const item = await response.json();
-            console.log(item);
-            setItem(item);
+        const controller = new AbortController();
+        const getItem = async (controller: AbortController) => {
+            try {
+                const response = await fetch(`${ITEMS_URL}/${id}`, { signal: controller.signal });
+                if (!response.ok) return history.push('/notfound');
+                const item = await response.json();
+                console.log(item);
+                setItem(item);
+            } catch (error) {
+                if (error.name !== 'AbortError') console.log(error);
+            }
         };
-        getItem();
+        getItem(controller);
+        return () => controller.abort();
     }, [history, id]);
 
     return (

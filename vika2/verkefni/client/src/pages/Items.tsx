@@ -29,11 +29,17 @@ export const Items = () => {
     const history = useHistory();
 
     useEffect(() => {
-        const getAllItems = async () => {
-            const response = await fetch(ITEMS_URL);
-            setItems(await response.json());
+        const controller = new AbortController();
+        const getAllItems = async (controller: AbortController) => {
+            try {
+                const response = await fetch(ITEMS_URL, { signal: controller.signal });
+                setItems(await response.json());
+            } catch (error) {
+                if (error.name !== 'AbortError') console.log(error);
+            }
         };
-        getAllItems();
+        getAllItems(controller);
+        return () => controller.abort();
     }, []);
 
     return (

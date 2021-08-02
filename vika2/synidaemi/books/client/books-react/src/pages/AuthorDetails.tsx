@@ -46,17 +46,23 @@ export const AuthorDetails = () => {
     const history = useHistory();
 
     useEffect(() => {
-        const getAuthor = async () => {
-            const [authorResponse, bookResponse] = await Promise.all([
-                fetch(`${AUTHORS_URL}/${id}`),
-                fetch(`${AUTHORS_URL}/${id}/books`),
-            ]);
-            if (!authorResponse.ok) return history.push('/notfound');
-            setAuthor(await authorResponse.json());
-            if (!bookResponse.ok) return;
-            setBooks(await bookResponse.json());
+        const controller = new AbortController();
+        const getAuthor = async (controller: AbortController) => {
+            try {
+                const [authorResponse, bookResponse] = await Promise.all([
+                    fetch(`${AUTHORS_URL}/${id}`, { signal: controller.signal }),
+                    fetch(`${AUTHORS_URL}/${id}/books`, { signal: controller.signal }),
+                ]);
+                if (!authorResponse.ok) return history.push('/notfound');
+                setAuthor(await authorResponse.json());
+                if (!bookResponse.ok) return;
+                setBooks(await bookResponse.json());
+            } catch (error) {
+                if (error.name !== 'AbortError') console.log(error);
+            }
         };
-        getAuthor();
+        getAuthor(controller);
+        return () => controller.abort();
     }, [id, history]);
 
     return (
